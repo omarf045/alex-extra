@@ -12,7 +12,6 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
-app.use('/', require('./routes/pokemon.routes'));
 
 app.use((req,res,next)=>{
     next();
