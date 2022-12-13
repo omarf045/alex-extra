@@ -19,6 +19,4 @@ app.use((req,res,next)=>{
 })
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(app.get('port'),() =>{
-    console.log(`Servidor en el puerto ${app.get('port')}`);
-})
+app.listen(process.env.PORT || 5000)
