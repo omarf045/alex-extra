@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practica Extraordinario</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <link rel="icon" type="image/png" href="IMG/Logo_Secundario.png">
+    <link rel="stylesheet" href="index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <script>
+        var socket = io()
+        socket.on('info', data => {
+            //document.getElementById('time').innerHTML = (new Date()).toTimeString().split(' ')[0]
+            let div = document.getElementById('data')
+            div.innerHTML = '';
+
+            let not_keys = ["vendor", "stepping", "voltage", "governor", "speedmin", "speedmax", "socket", "cache", "buffers", "cached", "slab", "buffcache", "swaptotal", "swapused", "swapfree", "active", "free", "revision"]
+
+            for (const key of Object.keys(data)) {
+
+                div.innerHTML += `<h2 class="fw-bold">${key}</h2>`
+
+                var HTML_TABLE = `<table class="table">   
+                <tbody>`
+
+                for (const [key2, val] of Object.entries(data[key])) {
+                    if (!not_keys.includes(key2)) {
+                        HTML_TABLE += `<tr>`
+                        HTML_TABLE += `<td>${key2}</td>`
+                        HTML_TABLE += `<td>${val}</td>`
+                        HTML_TABLE += `</tr>`
+                    }
+                }
+
+                HTML_TABLE += `</tbody>
+                               </table>`
+
+                div.innerHTML += HTML_TABLE
+
+            }
+        })
+
+    </script>
+
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="container">
+                <h1>HOST</h1>
+            </div>
+        </nav>
+    </header>
+
+    <section class="cpu">
+        <div id="data"></div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
